@@ -5,3 +5,4 @@ class Zone:
         self.type = None
         self.capacity = None
         self.visual = None
+        self.neighbors = []
