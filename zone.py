@@ -4,5 +4,5 @@ class Zone:
         self.location = None
         self.type = None
         self.capacity = None
-        self.visual = None
+        self.color = None
         self.neighbors = []

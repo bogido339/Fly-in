@@ -1,5 +1,5 @@
 from graph import Graph
-from drower import Drower
+from drawer import Drawer
 from parser import MapParser
 import sys
 
@@ -13,9 +13,9 @@ def main() -> None:
     filemap = sys.argv[1]
 
     parser= MapParser()
-    drower = Drower()
+    drawer = Drawer()
     graph: Graph = parser.parse(filemap)
-    drower.drow(graph)
+    drawer.draw(graph)
     
 
 main()

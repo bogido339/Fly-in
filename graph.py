@@ -19,6 +19,7 @@ class Graph:
     def add_connections(self, zone1, zone2):
         connection = Connection(zone1, zone2)
         self.connections.append(connection)
+        return connection
 
 # def add_connection(self, zone1, zone2):
 
