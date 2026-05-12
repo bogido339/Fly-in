@@ -13,9 +13,9 @@ def main() -> None:
     filemap = sys.argv[1]
 
     parser= MapParser()
-    drawer = Drawer()
     graph: Graph = parser.parse(filemap)
+    drawer = Drawer()
+   
     drawer.draw(graph)
     
-
 main()

@@ -31,7 +31,7 @@ class Graph:
 #     zone2.neighbors.append(zone1)
 
     def get_zone(self, name):
-        return self.zones.get(name)
+        return self.zones.get(name, None)
 
     def get_neighbors(self, zone):
         return list(zone.neighbors)

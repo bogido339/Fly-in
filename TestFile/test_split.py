@@ -38,3 +38,33 @@ def parse_metadata(self, metadata, connection):
         connection.capacity = int(value)
     except ValueError:
         raise MapParserError("invalid capacity")
+    
+
+    def parse_start(self, line, graph):
+        
+        data = line.split(":", 1)[1].strip()
+        parts = data.split()
+
+        if len(parts) == 0 or len(parts) != 4:
+            raise MapParserError("invalid start_hub sysntax")
+
+        if parts[0].strip() != "start":
+            raise MapParserError("Invalid start hub name: expected 'start'")
+
+        try:
+            x = int(parts[1])
+            y = int(parts[2])
+            if (x, y) not in self.locations:
+                self.locations.append((x, y))
+            else:
+                raise MapParserError("this location is alrydy in map not fawnd")
+        except ValueError:
+            raise MapParserError("Invalid coordinates for 'start_hub'")
+
+        zone = Zone()
+        zone.name = data[0].strip()
+        zone.location = (x, y)
+
+        self.parse_metadata(parts[3], zone)
+
+        graph.add_zone(zone)

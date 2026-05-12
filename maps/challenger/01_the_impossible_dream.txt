@@ -4,7 +4,6 @@
 # The goal is NOT to validate this map but to push algorithmic limits.
 
 nb_drones: 25
-
 # === LAYER 0: The Nightmare Begins ===
 start_hub: start 0 0 [color=green max_drones=25]
 
