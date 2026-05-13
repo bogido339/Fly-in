@@ -1,5 +1,6 @@
 from graph import Graph
 from zone import Zone
+import sys
 
 
 class MapParserError(Exception):
@@ -41,6 +42,15 @@ class MapParser:
                         raise MapParserError(f"Line {nb_line}: Invalid zone capacity")
                 elif key.strip() == "zone":
                     obj.type = value.strip()
+
+                    if obj.type == "restricted":
+                        obj.cost = 2
+                    elif obj.type == "priority":
+                        obj.cost = 0.99
+                    elif obj.type == "blocked":
+                        obj.cost = sys.maxsize
+                    else:
+                        raise MapParserError(f"Line: {nb_line}: uknown type zone")
                 else:
                     raise MapParserError(f"Line {nb_line}: Invalid item '{key}' in zone metadata")
             else:
@@ -84,6 +94,7 @@ class MapParser:
             self.parse_metadata(meta_part, zone, nb_line)
 
         graph.add_zone(zone)
+        graph.start_zone = zone
 
     def parse_end(self, line, graph, nb_line):
         if "[" in line:
@@ -119,6 +130,7 @@ class MapParser:
             self.parse_metadata(meta_part, zone, nb_line)
             
         graph.add_zone(zone)
+        graph.end_zone = zone
 
     def parse_zone(self, line, graph, nb_line):
         if "[" in line:
@@ -152,6 +164,8 @@ class MapParser:
         
         if meta_part:
             self.parse_metadata(meta_part, zone, nb_line)
+        if not zone.cost:
+            zone.cost = 1
             
         graph.add_zone(zone)
 

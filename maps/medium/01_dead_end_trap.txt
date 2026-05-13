@@ -1,3 +1,5 @@
+
+
 # Medium Level 1: Dead end trap - drones might get stuck
 nb_drones: 5
 

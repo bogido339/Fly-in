@@ -1,6 +1,7 @@
 from graph import Graph
 from drawer import Drawer
 from parser import MapParser
+from pathfinding import PathFider
 import sys
 
 class ClassError(Exception):
@@ -14,8 +15,14 @@ def main() -> None:
 
     parser= MapParser()
     graph: Graph = parser.parse(filemap)
+    pathfider = PathFider(graph)
+    path = pathfider.find_shortest_path()
     drawer = Drawer()
-   
+    print("PATH:", path)
+
+    
+    
     drawer.draw(graph)
+        
     
 main()

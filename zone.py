@@ -6,3 +6,4 @@ class Zone:
         self.capacity = None
         self.color = None
         self.neighbors = []
+        self.cost = 0
