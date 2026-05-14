@@ -4,6 +4,7 @@ class Dron:
         self.path = path
         self.objective = None
         self.position_index = 0
+        self.current_zone = path[self.position_index]
 
     def run(self):
         pass

@@ -106,6 +106,22 @@ class Drawer:
                         text_surface = font.render(zone.name, True, self.text_color)
                         text_rect = text_surface.get_rect(center=(pos[0], pos[1] + radius + 12))
                         screen.blit(text_surface, text_rect)
+                for zone in graph.path:
+                    x, y = zone.location
+                    pos = world_to_screen(x * SCALE, y * SCALE)
+                    radius = max(6, int(15 * zoom))
+
+                    zone_color = (255, 255, 255)
+                    pygame.draw.circle(screen, zone_color, pos, radius)
+                    
+                    outline_thickness = max(1, int(2 * zoom))
+                    pygame.draw.circle(screen, (255, 255, 255), pos, radius, outline_thickness)
+                    
+                    if hasattr(zone, 'name'):
+                        text_surface = font.render(zone.name, True, self.text_color)
+                        text_rect = text_surface.get_rect(center=(pos[0], pos[1] + radius + 12))
+                        screen.blit(text_surface, text_rect)
+
 
             pygame.display.flip()
             clock.tick(60)

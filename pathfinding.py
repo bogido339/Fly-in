@@ -18,27 +18,38 @@ class PathFider():
         path = {zone: None for zone in self.graph.zones.values()}
         dist = {zone: sys.maxsize for zone in self.graph.zones.values()}
 
-        heapq.heappush(pq, (0, self.start_zone))
+        dist[self.start_zone] = 0
+
+        heapq.heappush(pq, (0, id(self.start_zone), self.start_zone))
 
         while pq:
-
-            zone_cost, zone = heapq.heappop(pq)
+            zone_cost, _, zone = heapq.heappop(pq)
 
             if zone_cost > dist[zone]:
                 continue
 
+            if zone == self.end_zone:
+                break
+
             for neighbor in zone.neighbors:
-                if neighbor.cost + zone_cost < dist[neighbor]:
-                    dist[neighbor] = neighbor.cost + zone_cost
-                    heapq.heappush(pq, (dist[neighbor], neighbor))
+                new_cost = zone_cost + neighbor.cost
+                
+                if new_cost < dist[neighbor]:
+                    dist[neighbor] = new_cost
                     path[neighbor] = zone
+                    heapq.heappush(pq, (new_cost, id(neighbor), neighbor))
+        print("goal_turn:", dist[self.graph.get_zone("impossible_goal")])
 
         zone = self.end_zone
         path_list = []
-        while path[zone]:
-            path_list.append(path[zone])
-            zone = path[zone]
-            
+        
+        if path.get(zone) is None and zone != self.start_zone:
+            raise PathfinderError("The route to the final point could not be found.")
 
+        while zone:
+            path_list.append(zone)
+            zone = path.get(zone)
+            
+        path_list.reverse()
 
         return path_list

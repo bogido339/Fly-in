@@ -1,4 +1,4 @@
-MAP = maps/medium/02_circular_loop.txt
+MAP = maps/challenger/01_the_impossible_dream.txt
 
 install:
 	pip install flake8 mypy poetry

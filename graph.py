@@ -7,6 +7,7 @@ class Graph:
         self.connections = []
         self.start_zone = None
         self.end_zone = None
+        self.path = None
         
 
     def add_zone(self, zone):

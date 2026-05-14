@@ -17,8 +17,10 @@ def main() -> None:
     graph: Graph = parser.parse(filemap)
     pathfider = PathFider(graph)
     path = pathfider.find_shortest_path()
+    graph.path = path
+   
+    print("PATH:", [zone.name for zone in path])
     drawer = Drawer()
-    print("PATH:", path)
 
     
     
