@@ -1,19 +1,26 @@
 MAP = maps/challenger/01_the_impossible_dream.txt
 
+PYTHON = python3
+MAIN = main.py
+
 install:
-	pip install flake8 mypy poetry
+	$(PYTHON) -m pip install flake8 mypy poetry
 
 run:
-	python3 main.py $(MAP)
+	$(PYTHON) $(MAIN) $(MAP)
 
 debug:
-	python3 -m pdb fly-in.py
+	$(PYTHON) -m pdb $(MAIN) $(MAP)
 
 clean:
-	
+	find . -type d -name "__pycache__" -exec rm -rf {} +
+	find . -type f -name "*.pyc" -delete
+
 lint:
+	flake8 .
 
 lint-strict:
-	
+	flake8 . --max-line-length=88 --statistics
+	mypy .
 
 .PHONY: install run debug clean lint lint-strict

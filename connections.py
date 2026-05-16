@@ -3,3 +3,4 @@ class Connection:
         self.start = zone1
         self.end = zone2
         self.capacity = None
+        self.active_drones = []

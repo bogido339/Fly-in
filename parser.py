@@ -18,6 +18,7 @@ class MapParser:
             if number < 0:
                 raise ValueError()
             graph.nb_drones = number
+
         except ValueError:
             raise MapParserError(f"Line {nb_line}: Invalid 'nb_drones' value: expected a positive integer after ':'")
 
