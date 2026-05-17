@@ -38,7 +38,6 @@ class PathFider():
                     dist[neighbor] = new_cost
                     path[neighbor] = zone
                     heapq.heappush(pq, (new_cost, id(neighbor), neighbor))
-        print("goal_turn:", dist[self.graph.get_zone("impossible_goal")])
 
         zone = self.end_zone
         path_list = []

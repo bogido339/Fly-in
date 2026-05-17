@@ -22,16 +22,12 @@ def main() -> None:
     path = pathfider.find_shortest_path()
 
     graph.path = path
-    print("PATH:", [zone.name for zone in path])
 
     simulator = Simulator(graph)
     simulator.create_drons()
-    # simulator.run()
     
     drawer = Drawer()
     drawer.draw_all(graph, simulator)
 
-    
-        
-    
+
 main()

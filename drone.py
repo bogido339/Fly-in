@@ -1,10 +1,12 @@
 class Drone:
-    def __init__(self, drone_id, path):
+    def __init__(self, drone_id, path, graph):
         self.drone_id = drone_id
+
+        self.graph = graph
 
         self.current_location = None
 
-        self.path = path
+        self.path = iter(path)
 
         self.destination = None
 
@@ -16,14 +18,25 @@ class Drone:
     def is_in_connection(self):
         return self.current_location.__class__.__name__ == "Connection"
     
-    def get_next_target_from_path(self):
-        index = self.path.index(self.destination)
-        if index < 24:
-            return self.path[index + 1]
-        return []
+    def get_destination(self):
 
-    def move_to(self, destination):
-        self.destination = destination
+        if self.is_in_zone():
+            _next = next(self.path, None)
+        elif self.is_in_connection():
+            _next = self.current_location.end
+
+        if _next:
+            if _next.type == "restricted":
+                self.destination = self.graph.get_connection(self.current_location, _next)
+            else:
+                self.destination = _next
+
+
+    def move_to_next(self):
+        self.current_location = self.destination
+        
+        
+        
 
     def get_next_target_from_path(self):
         if self.path_index < len(self.path) - 1:

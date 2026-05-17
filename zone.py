@@ -3,7 +3,7 @@ class Zone:
         self.name = None
         self.location = None
         self.type = None
-        self.capacity = None
+        self.capacity = 1
         self.color = None
         self.neighbors = []
         self.cost = 0

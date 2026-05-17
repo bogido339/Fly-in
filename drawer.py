@@ -45,13 +45,13 @@ class Drawer:
             outline_thickness = max(1, int(2 * self.zoom))
             pygame.draw.circle(self.screen, (255, 255, 255), pos, radius, outline_thickness)
 
-            if hasattr(zone, 'name'):
-                text_surface = self.font.render(zone.name, True, self.text_color)
-                text_rect = text_surface.get_rect(center=(pos[0], pos[1] + radius + 12))
-                self.screen.blit(text_surface, text_rect)
+            # if hasattr(zone, 'name'):
+                # text_surface = self.font.render(zone.name, True, self.text_color)
+                # text_rect = text_surface.get_rect(center=(pos[0], pos[1] + radius + 12))
+                # self.screen.blit(text_surface, text_rect)
 
     def draw_connections(self):
-        for connection in self.graph.connections:
+        for connection in self.graph.connections.values():
             start_zone = getattr(connection, 'start', None)
             end_zone = getattr(connection, 'end', None)
 
@@ -103,8 +103,8 @@ class Drawer:
             self.camera_y -= pan_speed
         if keys[pygame.K_DOWN]:
             self.camera_y += pan_speed
-        if keys[pygame.K_SPACE]:
-            self.simulator.run()
+        # if keys[pygame.K_SPACE]:
+        #     self.simulator.run()
 
     def draw_all(self, graph, simulator):
         pygame.init()
@@ -123,12 +123,18 @@ class Drawer:
         running = True
 
         while running:
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                elif event.type == pygame.MOUSEWHEEL:
+
+                if event.type == pygame.MOUSEWHEEL:
                     self.zoom += event.y * 0.1
                     self.zoom = max(0.2, min(3.0, self.zoom))
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.simulator.run()
 
             self.process_controls()
 
