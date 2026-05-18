@@ -23,33 +23,42 @@ class Simulator:
                 return False
         return True
     
-    def is_move_valid(self, drone: Drone, target) -> bool:
+    def is_next_move_valid(self, drone: Drone) -> bool:
+        if drone.destination and drone.destination.__class__.__name__ == "Zone":
+            print("type the destination:",drone.destination.__class__.__name__)
+            if drone.current_location.capacity > drone.destination.current_drones:
+                return True
+            else:
+                return False
+        else:
+            return True
+        
+    def is_next_move_valid(self, drone: Drone) -> bool:
+        if drone.destination and drone.destination.__class__.__name__ == "Zone":
+
+            print("type the destination:", drone.destination.__class__.__name__)
+
+            if drone.destination.capacity > drone.destination.current_drones:
+                return True
+            else:
+                return False
+
         return True
 
     def tick(self) -> None:
         turn_moves = []
 
         for drone in self.drones:
+            print(f"drone_id {drone.drone_id} current location: {drone.current_location}")
             if drone.current_location == self.graph.end_zone:
                 continue
-            if drone.destination.__class__.__name__ == "Zone":
-                if (self.is_move_valid(drone, drone.destination)
-                    and drone.destination.current_drones < drone.destination.capacity):
-                    
-                    drone.current_location.current_drones -= 1
-                    
-                    drone.move_to_next()
-                    
-                    turn_moves.append(f"D{drone.drone_id}-{drone.current_location.name}")
-                    drone.destination.current_drones += 1
-                    drone.get_destination()
-                    
-                else:
-                    pass
-            else:
-                drone.move_to_next()
-                drone.get_destination()
 
+            drone.get_destination()
+
+            if self.is_next_move_valid(drone):
+                drone.move()
+            else:
+                pass
 
         if turn_moves:
             print(" ".join(turn_moves))

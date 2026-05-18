@@ -20,7 +20,7 @@ class Graph:
 
     def add_connections(self, zone1, zone2):
         connection = Connection(zone1, zone2)
-        self.connections.update({(zone1.name, zone2.name): connection})
+        self.connections.update({(zone1, zone2): connection})
 
         zone1.neighbors.append(zone2)
         zone2.neighbors.append(zone1)
@@ -34,4 +34,4 @@ class Graph:
         return list(zone.neighbors)
     
     def get_connection(self, zone1, zone2):
-        return self.connections[(zone1.name, zone2.name)]
+        return self.connections.get((zone1, zone2), None)

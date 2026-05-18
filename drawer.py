@@ -76,8 +76,15 @@ class Drawer:
         for drone in self.simulator.drones:
             if drone.current_location is None:
                 continue
+            
+            if drone.is_in_zone():
+                x, y = drone.current_location.location
+            else:
+                start_x, start_y = drone.current_location.start.location
+                end_x, end_y = drone.current_location.end.location
 
-            x, y = drone.current_location.location
+                x = int((start_x + end_x) / 2)
+                y = int((start_y + end_y) / 2)
             pos = self.world_to_screen(x * self.SCALE, y * self.SCALE)
             radius = max(6, int(8 * self.zoom))
 
