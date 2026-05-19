@@ -6,7 +6,7 @@ class Zone:
         self.capacity = 1
         self.color = None
         self.neighbors = []
-        self.cost = 0
+        self.cost = 1
         self.current_drones = 0
 
     def zone_capacity(self, drones_leaving=0):

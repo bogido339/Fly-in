@@ -96,6 +96,8 @@ class MapParser:
 
         graph.add_zone(zone)
         graph.start_zone = zone
+        graph.start_zone.current_drones = graph.nb_drones
+        graph.start_zone.capacity = graph.nb_drones
 
     def parse_end(self, line, graph, nb_line):
         if "[" in line:
@@ -132,6 +134,7 @@ class MapParser:
             
         graph.add_zone(zone)
         graph.end_zone = zone
+        graph.end_zone.capacity = graph.nb_drones
 
     def parse_zone(self, line, graph, nb_line):
         if "[" in line:
@@ -165,8 +168,6 @@ class MapParser:
         
         if meta_part:
             self.parse_metadata(meta_part, zone, nb_line)
-        if not zone.cost:
-            zone.cost = 1
             
         graph.add_zone(zone)
 

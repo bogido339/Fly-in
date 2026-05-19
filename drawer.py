@@ -83,8 +83,8 @@ class Drawer:
                 start_x, start_y = drone.current_location.start.location
                 end_x, end_y = drone.current_location.end.location
 
-                x = int((start_x + end_x) / 2)
-                y = int((start_y + end_y) / 2)
+                x = (start_x + end_x) / 2
+                y = (start_y + end_y) / 2
             pos = self.world_to_screen(x * self.SCALE, y * self.SCALE)
             radius = max(6, int(8 * self.zoom))
 
@@ -110,14 +110,12 @@ class Drawer:
             self.camera_y -= pan_speed
         if keys[pygame.K_DOWN]:
             self.camera_y += pan_speed
-        # if keys[pygame.K_SPACE]:
-        #     self.simulator.run()
 
     def draw_all(self, graph, simulator):
         pygame.init()
         pygame.font.init()
 
-        WIDTH, HEIGHT = 800, 600
+        WIDTH, HEIGHT = 8000, 6000
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         pygame.display.set_caption("FLY-IN")
 
@@ -140,7 +138,7 @@ class Drawer:
                     self.zoom = max(0.2, min(3.0, self.zoom))
 
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_RETURN:
                         self.simulator.run()
 
             self.process_controls()

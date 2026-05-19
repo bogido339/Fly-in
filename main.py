@@ -23,8 +23,12 @@ def main() -> None:
 
     graph.path = path
 
+    print([zone.name for zone in path])
+
     simulator = Simulator(graph)
     simulator.create_drons()
+
+
     
     drawer = Drawer()
     drawer.draw_all(graph, simulator)
